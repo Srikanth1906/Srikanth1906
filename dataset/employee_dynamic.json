@@ -1,0 +1,20 @@
+{
+	"name": "employee_dynamic",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "employee_dynamic",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "employee",
+				"container": "adf-files"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
