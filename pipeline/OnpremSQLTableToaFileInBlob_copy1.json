@@ -83,8 +83,8 @@
 			"TableList": {
 				"type": "Array",
 				"defaultValue": [
-					"select * from [dbo].[sample01]",
-					"select * from [dbo].[emp]"
+					"sample01",
+					"emp"
 				]
 			}
 		},
