@@ -28,10 +28,6 @@
 							"typeProperties": {
 								"source": {
 									"type": "SqlServerSource",
-									"sqlReaderQuery": {
-										"value": "@item()",
-										"type": "Expression"
-									},
 									"queryTimeout": "02:00:00",
 									"partitionOption": "None"
 								},
@@ -83,8 +79,8 @@
 			"TableList": {
 				"type": "Array",
 				"defaultValue": [
-					"sample01",
-					"emp"
+					"[dbo].[sample01]",
+					"[dbo].[emp]"
 				]
 			}
 		},
