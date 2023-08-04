@@ -1,0 +1,112 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "Learn-DataFactoryFromScratch"
+		},
+		"AzureBlob_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlob'"
+		},
+		"OnpremSQL_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'OnpremSQL'",
+			"defaultValue": "Integrated Security=True;Data Source=SRIKANTHREDDY;Initial Catalog=GFC_Datamart"
+		},
+		"OnpremSQL_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'OnpremSQL'"
+		},
+		"SQL_Employee_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SQL_Employee'"
+		},
+		"emp_dynamic_new_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'emp_dynamic_new'"
+		},
+		"employee_dynamic_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'employee_dynamic'"
+		},
+		"OnpremSQL_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "srikanth1906"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "Learn-DataFactoryFromScratch_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"OnpremSQL_connectionString": {
+						"value": "[parameters('OnpremSQL_connectionString')]"
+					},
+					"OnpremSQL_password": {
+						"value": "[parameters('OnpremSQL_password')]"
+					},
+					"AzureBlob_connectionString": {
+						"value": "[parameters('AzureBlob_connectionString')]"
+					},
+					"SQL_Employee_connectionString": {
+						"value": "[parameters('SQL_Employee_connectionString')]"
+					},
+					"emp_dynamic_new_connectionString": {
+						"value": "[parameters('emp_dynamic_new_connectionString')]"
+					},
+					"employee_dynamic_connectionString": {
+						"value": "[parameters('employee_dynamic_connectionString')]"
+					},
+					"OnpremSQL_properties_typeProperties_userName": {
+						"value": "[parameters('OnpremSQL_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "Learn-DataFactoryFromScratch_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'Learn-DataFactoryFromScratch_ArmTemplate_0')]"
+			]
+		}
+	]
+}

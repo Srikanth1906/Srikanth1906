@@ -1,0 +1,30 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "Learn-DataFactoryFromScratch"
+		},
+		"AzureBlob_connectionString": {
+			"value": ""
+		},
+		"OnpremSQL_connectionString": {
+			"value": "Integrated Security=True;Data Source=SRIKANTHREDDY;Initial Catalog=GFC_Datamart"
+		},
+		"OnpremSQL_password": {
+			"value": ""
+		},
+		"SQL_Employee_connectionString": {
+			"value": ""
+		},
+		"emp_dynamic_new_connectionString": {
+			"value": ""
+		},
+		"employee_dynamic_connectionString": {
+			"value": ""
+		},
+		"OnpremSQL_properties_typeProperties_userName": {
+			"value": "srikanth1906"
+		}
+	}
+}
