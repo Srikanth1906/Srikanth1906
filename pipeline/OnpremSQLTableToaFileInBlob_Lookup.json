@@ -55,7 +55,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@activity('Lookup1').output",
+									"value": "@activity('Lookup1').output.pipelineReturnValue",
 									"type": "Expression"
 								},
 								"ifTrueActivities": [
