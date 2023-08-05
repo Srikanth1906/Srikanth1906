@@ -16,6 +16,8 @@
 						{
 							"name": "Copy data1",
 							"type": "Copy",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "Lookup1",
@@ -115,7 +117,8 @@
 				"type": "Array",
 				"defaultValue": [
 					"[dbo].[sample01]",
-					"[dbo].[emp]"
+					"[dbo].[emp]",
+					"[dbo].[dept]"
 				]
 			}
 		},
