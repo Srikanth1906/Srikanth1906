@@ -55,7 +55,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@activity('Lookup1').output.pipelineReturnValue",
+									"value": "@greater(activity('Lookup1').output.firstRow.RecordCount,0)",
 									"type": "Expression"
 								},
 								"ifTrueActivities": [
