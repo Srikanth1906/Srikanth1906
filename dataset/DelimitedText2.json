@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "dbo.emp.csv",
+				"fileName": "emp.csv",
 				"container": "adf-files"
 			},
 			"columnDelimiter": ",",
