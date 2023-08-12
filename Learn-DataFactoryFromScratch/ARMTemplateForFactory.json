@@ -53,7 +53,7 @@
 			"type": "string",
 			"defaultValue": "HAPPIESTMINDS\\Srikanth.Reddy2"
 		},
-		"CustomTrigger_properties_typeProperties_scope": {
+		"trigger1_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/a389577d-0b83-4928-b0f5-dfd08c6d7577/resourceGroups/DataEngieer-Preparation_RG/providers/Microsoft.Storage/storageAccounts/azurestorageforadf"
 		}
@@ -170,6 +170,80 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DelimitedText2')]",
 				"[concat(variables('factoryId'), '/datasets/DelimitedText3')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CustomTrigger_Pipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"wildcardFolderPath": "Staging",
+									"wildcardFileName": "*",
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "DS_BlobStaging",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_onpremsql",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_BlobStaging')]",
+				"[concat(variables('factoryId'), '/datasets/ds_onpremsql')]"
 			]
 		},
 		{
@@ -1746,6 +1820,37 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/trigger1')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "CustomTrigger_Pipeline",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/adf-files/blobs/Staging/",
+					"ignoreEmptyBlobs": false,
+					"scope": "[parameters('trigger1_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated",
+						"Microsoft.Storage.BlobDeleted"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/CustomTrigger_Pipeline')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AutoResolveIntegrationRuntime')]",
 			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
 			"apiVersion": "2018-06-01",
@@ -1786,110 +1891,6 @@
 			"apiVersion": "2018-06-01",
 			"properties": {},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CustomTrigger_Pipeline')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"wildcardFolderPath": "Staging",
-									"wildcardFileName": "*",
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "SqlServerSink",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "DS_BlobStaging",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "ds_onpremsql",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DS_BlobStaging')]",
-				"[concat(variables('factoryId'), '/datasets/ds_onpremsql')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CustomTrigger')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Stopped",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "CustomTrigger_Pipeline",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "BlobEventsTrigger",
-				"typeProperties": {
-					"blobPathBeginsWith": "/adf-files/blobs/Staging/",
-					"ignoreEmptyBlobs": false,
-					"scope": "[parameters('CustomTrigger_properties_typeProperties_scope')]",
-					"events": [
-						"Microsoft.Storage.BlobCreated"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/CustomTrigger_Pipeline')]"
-			]
 		}
 	]
 }

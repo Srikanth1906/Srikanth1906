@@ -53,7 +53,7 @@
 			"type": "string",
 			"defaultValue": "HAPPIESTMINDS\\Srikanth.Reddy2"
 		},
-		"CustomTrigger_properties_typeProperties_scope": {
+		"trigger1_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/a389577d-0b83-4928-b0f5-dfd08c6d7577/resourceGroups/DataEngieer-Preparation_RG/providers/Microsoft.Storage/storageAccounts/azurestorageforadf"
 		},
@@ -135,8 +135,8 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"CustomTrigger_properties_typeProperties_scope": {
-						"value": "[parameters('CustomTrigger_properties_typeProperties_scope')]"
+					"trigger1_properties_typeProperties_scope": {
+						"value": "[parameters('trigger1_properties_typeProperties_scope')]"
 					}
 				}
 			},
