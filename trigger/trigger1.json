@@ -1,0 +1,25 @@
+{
+	"name": "trigger1",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "CustomTrigger_Pipeline",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/adf-files/blobs/Staging/",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/a389577d-0b83-4928-b0f5-dfd08c6d7577/resourceGroups/DataEngieer-Preparation_RG/providers/Microsoft.Storage/storageAccounts/azurestorageforadf",
+			"events": [
+				"Microsoft.Storage.BlobCreated",
+				"Microsoft.Storage.BlobDeleted"
+			]
+		}
+	}
+}
