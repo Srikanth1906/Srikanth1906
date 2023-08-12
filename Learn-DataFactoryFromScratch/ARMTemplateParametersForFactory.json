@@ -23,8 +23,17 @@
 		"employee_dynamic_connectionString": {
 			"value": ""
 		},
+		"ls_laptopDB_connectionString": {
+			"value": "Integrated Security=True;Data Source=HMECL002938;Initial Catalog=mytestdb"
+		},
+		"ls_laptopDB_password": {
+			"value": ""
+		},
 		"OnpremSQL_properties_typeProperties_userName": {
 			"value": "srikanth1906"
+		},
+		"ls_laptopDB_properties_typeProperties_userName": {
+			"value": "HAPPIESTMINDS\\Srikanth.Reddy2"
 		}
 	}
 }

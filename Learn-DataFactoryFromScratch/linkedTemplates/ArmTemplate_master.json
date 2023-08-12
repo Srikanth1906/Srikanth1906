@@ -32,9 +32,22 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'employee_dynamic'"
 		},
+		"ls_laptopDB_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ls_laptopDB'",
+			"defaultValue": "Integrated Security=True;Data Source=HMECL002938;Initial Catalog=mytestdb"
+		},
+		"ls_laptopDB_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'ls_laptopDB'"
+		},
 		"OnpremSQL_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "srikanth1906"
+		},
+		"ls_laptopDB_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "HAPPIESTMINDS\\Srikanth.Reddy2"
 		},
 		"containerUri": {
 			"type": "string",
@@ -81,8 +94,17 @@
 					"employee_dynamic_connectionString": {
 						"value": "[parameters('employee_dynamic_connectionString')]"
 					},
+					"ls_laptopDB_connectionString": {
+						"value": "[parameters('ls_laptopDB_connectionString')]"
+					},
+					"ls_laptopDB_password": {
+						"value": "[parameters('ls_laptopDB_password')]"
+					},
 					"OnpremSQL_properties_typeProperties_userName": {
 						"value": "[parameters('OnpremSQL_properties_typeProperties_userName')]"
+					},
+					"ls_laptopDB_properties_typeProperties_userName": {
+						"value": "[parameters('ls_laptopDB_properties_typeProperties_userName')]"
 					}
 				}
 			},

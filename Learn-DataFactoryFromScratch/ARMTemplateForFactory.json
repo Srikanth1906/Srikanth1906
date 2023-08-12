@@ -32,9 +32,22 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'employee_dynamic'"
 		},
+		"ls_laptopDB_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ls_laptopDB'",
+			"defaultValue": "Integrated Security=True;Data Source=HMECL002938;Initial Catalog=mytestdb"
+		},
+		"ls_laptopDB_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'ls_laptopDB'"
+		},
 		"OnpremSQL_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "srikanth1906"
+		},
+		"ls_laptopDB_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "HAPPIESTMINDS\\Srikanth.Reddy2"
 		}
 	},
 	"variables": {
@@ -1137,6 +1150,24 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_LaptopSQLDB')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_laptopDB",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_laptopDB')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1159,6 +1190,42 @@
 					"quoteChar": "\""
 				},
 				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlob')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Employeesheet')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlob",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Sheet1",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "employeesheet.xlsx",
+						"folderPath": "emp",
+						"container": "adf-files"
+					}
+				},
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlob')]"
@@ -1408,6 +1475,30 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/ls_laptopDB')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"connectionString": "[parameters('ls_laptopDB_connectionString')]",
+					"userName": "[parameters('ls_laptopDB_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('ls_laptopDB_password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveIntegrationRuntime",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AutoResolveIntegrationRuntime')]",
 			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
 			"apiVersion": "2018-06-01",
@@ -1450,7 +1541,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Employeesheet')]",
+			"name": "[concat(parameters('factoryName'), '/DelimitedText2')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -1459,30 +1550,186 @@
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
-				"type": "Excel",
+				"type": "DelimitedText",
 				"typeProperties": {
-					"sheetName": "Sheet1",
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "employeesheet.xlsx",
-						"folderPath": "emp",
+						"fileName": "dbo.emp.csv",
 						"container": "adf-files"
-					}
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
 				},
 				"schema": [
 					{
+						"name": "empno",
 						"type": "String"
 					},
 					{
+						"name": "ename",
 						"type": "String"
 					},
 					{
+						"name": "loc",
 						"type": "String"
 					}
 				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlob')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText3')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlob",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "Output",
+						"container": "adf-files"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "empno",
+						"type": "String"
+					},
+					{
+						"name": "ename",
+						"type": "String"
+					},
+					{
+						"name": "loc",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlob')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Checkpoint')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Wait1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "DelimitedText2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DelimitedText3",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Wait1",
+						"type": "Wait",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"waitTimeInSeconds": 3
+						}
+					},
+					{
+						"name": "Wait1_copy1",
+						"type": "Wait",
+						"dependsOn": [
+							{
+								"activity": "Copy data1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"waitTimeInSeconds": 2
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DelimitedText2')]",
+				"[concat(variables('factoryId'), '/datasets/DelimitedText3')]"
 			]
 		}
 	]
