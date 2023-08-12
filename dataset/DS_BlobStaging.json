@@ -1,0 +1,23 @@
+{
+	"name": "DS_BlobStaging",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BlobStaging",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "Staging",
+				"container": "adf-files"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
