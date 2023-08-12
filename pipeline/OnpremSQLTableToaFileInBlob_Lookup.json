@@ -107,13 +107,7 @@
 										"outputs": [
 											{
 												"referenceName": "DelimitedText1",
-												"type": "DatasetReference",
-												"parameters": {
-													"filename": {
-														"value": "@concat(item(),'_',formatDateTime(utcnow(),'MM-dd-yyyy'),'.csv')\n\n",
-														"type": "Expression"
-													}
-												}
+												"type": "DatasetReference"
 											}
 										]
 									}
