@@ -1,7 +1,9 @@
 {
 	"name": "CustomTrigger",
 	"properties": {
-		"annotations": [],
+		"annotations": [
+			"fileadded"
+		],
 		"runtimeState": "Started",
 		"pipelines": [
 			{
