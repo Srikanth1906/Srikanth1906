@@ -13,6 +13,47 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/employeeSQL_dynamic__withCSVFile')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SQL_Employee",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "employee"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/employee_dynamic')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "employee_dynamic",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "employee",
+						"container": "adf-files"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Checkpoint_ADFPipeline')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -236,7 +277,9 @@
 				"annotations": [],
 				"lastPublishTime": "2023-07-28T13:15:31Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/employee_dynamic')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/OnpremSQLTableToaFileInBlob')]",
@@ -853,7 +896,9 @@
 				"annotations": [],
 				"lastPublishTime": "2023-07-30T12:47:36Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/employeeSQL_dynamic__withCSVFile')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/emp_Datacopy_dynamic_withCSVFile')]",
@@ -972,7 +1017,9 @@
 				"annotations": [],
 				"lastPublishTime": "2023-07-30T12:30:27Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/employee_dynamic')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/emp_Datacopy_dynamic_withCSVFile_copy1')]",

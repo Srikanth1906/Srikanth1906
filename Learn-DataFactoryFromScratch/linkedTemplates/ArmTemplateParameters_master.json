@@ -8,6 +8,9 @@
 		"AzureBlob_connectionString": {
 			"value": ""
 		},
+		"BlobStaging_connectionString": {
+			"value": ""
+		},
 		"OnpremSQL_connectionString": {
 			"value": "Integrated Security=True;Data Source=SRIKANTHREDDY;Initial Catalog=GFC_Datamart"
 		},

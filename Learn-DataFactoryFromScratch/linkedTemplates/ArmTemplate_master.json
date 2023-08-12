@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlob'"
 		},
+		"BlobStaging_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'BlobStaging'"
+		},
 		"OnpremSQL_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'OnpremSQL'",
@@ -84,6 +88,9 @@
 					},
 					"AzureBlob_connectionString": {
 						"value": "[parameters('AzureBlob_connectionString')]"
+					},
+					"BlobStaging_connectionString": {
+						"value": "[parameters('BlobStaging_connectionString')]"
 					},
 					"SQL_Employee_connectionString": {
 						"value": "[parameters('SQL_Employee_connectionString')]"
