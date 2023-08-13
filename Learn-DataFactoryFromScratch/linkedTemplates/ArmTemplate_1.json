@@ -86,6 +86,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
+						"fileName": "emp.csv",
 						"folderPath": "Staging",
 						"container": "adf-files"
 					},
