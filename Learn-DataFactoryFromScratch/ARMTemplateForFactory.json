@@ -1916,7 +1916,14 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/cdcnewblobstage')]",
+			"name": "[concat(parameters('factoryName'), '/default')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
+			"apiVersion": "2018-06-01",
+			"properties": {},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/stagenewblob')]",
 			"type": "Microsoft.DataFactory/factories/adfcdcs",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -2101,43 +2108,23 @@
 								},
 								{
 									"name": "format",
-									"value": "delta"
+									"value": "delimited"
 								},
 								{
-									"name": "mergeSchema",
+									"name": "columnNamesAsHeader",
 									"value": true
 								},
 								{
-									"name": "autoCompact",
-									"value": true
+									"name": "columnDelimiter",
+									"value": ","
 								},
 								{
-									"name": "optimizedWrite",
-									"value": true
+									"name": "escapeChar",
+									"value": "\\\\"
 								},
 								{
-									"name": "deletable",
-									"value": false
-								},
-								{
-									"name": "insertable",
-									"value": true
-								},
-								{
-									"name": "updateable",
-									"value": false
-								},
-								{
-									"name": "upsertable",
-									"value": false
-								},
-								{
-									"name": "skipDuplicateMapInputs",
-									"value": true
-								},
-								{
-									"name": "skipDuplicateMapOutputs",
-									"value": true
+									"name": "quoteChar",
+									"value": "\\\""
 								}
 							]
 						},
@@ -2170,13 +2157,6 @@
 				"[concat(variables('factoryId'), '/linkedServices/BlobNewStage')]",
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlob')]"
 			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/default')]",
-			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
-			"apiVersion": "2018-06-01",
-			"properties": {},
-			"dependsOn": []
 		}
 	]
 }
