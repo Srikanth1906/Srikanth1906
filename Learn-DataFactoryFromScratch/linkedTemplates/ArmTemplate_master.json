@@ -45,6 +45,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ls_laptopDB'"
 		},
+		"BlobNewStage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'BlobNewStage'"
+		},
 		"OnpremSQL_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "srikanth1906"
@@ -106,6 +110,9 @@
 					},
 					"ls_laptopDB_password": {
 						"value": "[parameters('ls_laptopDB_password')]"
+					},
+					"BlobNewStage_connectionString": {
+						"value": "[parameters('BlobNewStage_connectionString')]"
 					},
 					"OnpremSQL_properties_typeProperties_userName": {
 						"value": "[parameters('OnpremSQL_properties_typeProperties_userName')]"

@@ -13,6 +13,25 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/employeeSQL_dynamic')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SQL_Employee",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "employee"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/employeeSQL_dynamic__withCSVFile')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -50,6 +69,45 @@
 					}
 				},
 				"schema": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/NewBlobStage')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BlobNewStage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "Staging",
+						"container": "adf-files"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "empno",
+						"type": "String"
+					},
+					{
+						"name": "ename",
+						"type": "String"
+					},
+					{
+						"name": "loc",
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": []
 		},
@@ -349,7 +407,8 @@
 				"lastPublishTime": "2023-07-28T13:15:31Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/employee_dynamic')]"
+				"[concat(variables('factoryId'), '/datasets/employee_dynamic')]",
+				"[concat(variables('factoryId'), '/datasets/employeeSQL_dynamic')]"
 			]
 		},
 		{
@@ -1089,7 +1148,8 @@
 				"lastPublishTime": "2023-07-30T12:30:27Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/employee_dynamic')]"
+				"[concat(variables('factoryId'), '/datasets/employee_dynamic')]",
+				"[concat(variables('factoryId'), '/datasets/employeeSQL_dynamic')]"
 			]
 		},
 		{
@@ -1217,7 +1277,9 @@
 				"annotations": [],
 				"lastPublishTime": "2023-07-30T15:03:42Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/employeeSQL_dynamic')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/pipeline1')]",

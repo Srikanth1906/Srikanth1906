@@ -32,6 +32,9 @@
 		"ls_laptopDB_password": {
 			"value": ""
 		},
+		"BlobNewStage_connectionString": {
+			"value": ""
+		},
 		"OnpremSQL_properties_typeProperties_userName": {
 			"value": "srikanth1906"
 		},
