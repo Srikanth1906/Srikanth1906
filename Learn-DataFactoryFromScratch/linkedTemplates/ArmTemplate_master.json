@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlob'"
 		},
+		"BlobNewStage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'BlobNewStage'"
+		},
 		"BlobStaging_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'BlobStaging'"
@@ -44,10 +48,6 @@
 		"ls_laptopDB_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ls_laptopDB'"
-		},
-		"BlobNewStage_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'BlobNewStage'"
 		},
 		"OnpremSQL_properties_typeProperties_userName": {
 			"type": "string",
@@ -93,6 +93,9 @@
 					"AzureBlob_connectionString": {
 						"value": "[parameters('AzureBlob_connectionString')]"
 					},
+					"BlobNewStage_connectionString": {
+						"value": "[parameters('BlobNewStage_connectionString')]"
+					},
 					"BlobStaging_connectionString": {
 						"value": "[parameters('BlobStaging_connectionString')]"
 					},
@@ -110,9 +113,6 @@
 					},
 					"ls_laptopDB_password": {
 						"value": "[parameters('ls_laptopDB_password')]"
-					},
-					"BlobNewStage_connectionString": {
-						"value": "[parameters('BlobNewStage_connectionString')]"
 					},
 					"OnpremSQL_properties_typeProperties_userName": {
 						"value": "[parameters('OnpremSQL_properties_typeProperties_userName')]"

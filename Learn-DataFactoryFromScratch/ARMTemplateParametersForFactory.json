@@ -8,6 +8,9 @@
 		"AzureBlob_connectionString": {
 			"value": ""
 		},
+		"BlobNewStage_connectionString": {
+			"value": ""
+		},
 		"BlobStaging_connectionString": {
 			"value": ""
 		},
@@ -30,9 +33,6 @@
 			"value": "Integrated Security=True;Data Source=HMECL002938;Initial Catalog=mytestdb"
 		},
 		"ls_laptopDB_password": {
-			"value": ""
-		},
-		"BlobNewStage_connectionString": {
 			"value": ""
 		},
 		"OnpremSQL_properties_typeProperties_userName": {
