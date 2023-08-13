@@ -158,6 +158,28 @@
 								{
 									"name": "folderPath",
 									"value": "Output"
+								},
+								{
+									"name": "deletable",
+									"value": true
+								},
+								{
+									"name": "updateable",
+									"value": true
+								},
+								{
+									"name": "upsertable",
+									"value": true
+								},
+								{
+									"name": "defaultToUpsert",
+									"value": true
+								},
+								{
+									"name": "keys",
+									"value": [
+										"empno"
+									]
 								}
 							]
 						}
@@ -245,6 +267,7 @@
 			},
 			"mode": "Microbatch"
 		},
+		"status": "Stopped",
 		"allowVNetOverride": true
 	}
 }
